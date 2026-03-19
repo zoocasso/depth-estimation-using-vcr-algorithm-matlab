@@ -1,4 +1,4 @@
-# correlation-filter-and-VCR-algoritm (대학과제)
+# correlation-filter-and-VCR-algoritm
 Estimate the depth of the object in the image using a correlation filter and VCR algoritm
 
 ### 🧑🏻‍💻 Tech
