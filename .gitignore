@@ -1,0 +1,4 @@
+data/
+*.asv
+.DS_Store
+octave-workspace
