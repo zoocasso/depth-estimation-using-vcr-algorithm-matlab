@@ -6,7 +6,7 @@ function recon = vcr_reconstruct(get_image, cam, sx, sy)
 %
 %   get_image(k1, k2) returns elemental image (row k1, column k2) as a double array in [0, 1].
 %   Images are read one at a time, so a 10 x 10 set of 3008 x 2000 images never has to fit in
-%   memory at once. See EI_READER.
+%   memory at once, unless the reader caches them. See EI_READER.
 
 canvas = zeros(cam.Ny + max(sy), cam.Nx + max(sx), 3);
 count = zeros(cam.Ny + max(sy), cam.Nx + max(sx));
