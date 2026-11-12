@@ -2,9 +2,45 @@
 
 [![tests](https://github.com/zoocasso/depth-estimation-using-vcr-algorithm-matlab/actions/workflows/ci.yml/badge.svg)](https://github.com/zoocasso/depth-estimation-using-vcr-algorithm-matlab/actions/workflows/ci.yml)
 
+A 2022 course project, cleaned up and rewritten in 2026: an object's depth is estimated from integral images by reconstructing the scene at candidate depths and correlating each reconstruction with a reference image.<br>
+2022년 수업 프로젝트를 2026년에 정리해 다시 쓴 코드입니다. 후보 깊이마다 장면을 재구성하고 기준 영상과의 상관을 구해 물체의 깊이를 추정합니다.
+
+```mermaid
+flowchart LR
+    ei["Elemental images<br/>Three Characters: 10 × 10"]:::ext
+    ref["Reference image<br/>of the target"]:::ext
+    lec["Course lecture scripts<br/>2022: VCR and<br/>correlation filters"]:::other
+    vcr["VCR per candidate depth<br/>vcr_reconstruct"]:::rsbase
+    corr["FFT correlation peak<br/>4 filters and PCE"]:::rsbase
+    est["Best depth and tied range<br/>estimate_depth"]:::rs
+    ei --> vcr
+    vcr --> corr
+    ref --> corr
+    corr --> est
+    lec -.->|"base scripts"| vcr
+    lec -.->|"base scripts"| corr
+    classDef rs fill:#F3EEFE,stroke:#6338D6,stroke-width:2px,color:#0B0D12
+    classDef rsbase fill:#F3EEFE,stroke:#6338D6,stroke-width:2px,stroke-dasharray:4 3,color:#0B0D12
+    classDef other fill:#F1F2F5,stroke:#7A8394,stroke-width:1.5px,stroke-dasharray:5 4,color:#3F4654
+    classDef ext fill:#FFFFFF,stroke:#CBD1DA,stroke-width:1px,color:#3F4654
+```
+
+<sub>Solid violet: added in my 2026 rewrite · dashed violet: based on the course scripts, rewritten by me · grey dashed: the course's lecture materials · white: inputs.<br>
+보라 실선: 2026년 재작성에서 더한 부분 · 보라 점선: 수업 스크립트를 바탕으로 제가 다시 쓴 부분 · 회색 점선: 수업 강의자료 · 흰색: 입력.</sub>
+
 [English](#english) · [한국어](#한국어)
 
 ## English
+
+| At a glance | |
+| :--- | :--- |
+| **What** | 2022 course project (3D Image Processing, spring 2022): object depth from integral images, where my master's research on VCR started |
+| **My part** | 2022: ran the course scripts on the Three Characters set with small changes, and the depth experiments in the slides. 2026: this rewrite (see below) |
+| **Others** | The reconstruction scripts (fixed and nonuniform VCR) and the correlation-filter script came from the course's lecture materials |
+| **Numbers** | 121 candidate depths give 35 different fixed-VCR reconstructions · read cache: 100 JPEG decodes instead of 15,600 · 2022 estimate for the first target: 665–685 mm (fixed), 660 mm (nonuniform) |
+| **Stack** | MATLAB, GNU Octave (tests and CI) |
+| **Run · tests** | [Run](#run) · tests on synthetic scenes in GNU Octave, locally and on GitHub Actions |
+| **Write-up** | listed under other work on [zoocasso.github.io/en/work](https://zoocasso.github.io/en/work/) |
 
 A 2022 course project in MATLAB: find how far an object is from an integral-imaging camera array, using only the images. The scene is reconstructed at many depths with volumetric computational reconstruction (VCR); the object is sharp only at its own depth, so the depth where a reference image of the object correlates best is its estimated depth. This is where my master's research on VCR started ([origin point optimization](https://github.com/zoocasso/origin-point-optimization-vcr)).
 
@@ -39,6 +75,16 @@ octave --eval "addpath(pwd); addpath(fullfile(pwd, 'tests')); run_tests"
 [`results/fixed/`](results/fixed/) and [`results/nonuniform/`](results/nonuniform/) hold the 2022 reconstruction sweeps as videos: the Three Characters scene (3008 × 2000 px per image, 400–1000 mm) and a car scene at two resolutions (3072 × 2048 and 1536 × 1024 px, 200–500 mm). The slides are in [`docs/slides.pdf`](docs/slides.pdf); they give the fixed-VCR estimates as ranges (for example 665–685 mm for the first target) and the nonuniform ones as single depths (660 mm).
 
 ## 한국어
+
+| 한눈에 보기 | |
+| :--- | :--- |
+| **무엇** | 2022년 수업 프로젝트(3차원영상처리, 2022년 1학기): 집적 영상으로 물체의 깊이 추정. 지금 석사 연구의 출발점 |
+| **제가 한 일** | 2022년: 수업 스크립트를 Three Characters 데이터에 조금 고쳐 적용하고 슬라이드의 깊이 실험. 2026년: 이 저장소의 재작성(아래) |
+| **다른 사람** | 재구성 스크립트(fixed·nonuniform VCR)와 상관 필터 스크립트는 수업 강의자료 |
+| **수치** | 후보 깊이 121개에서 fixed VCR 재구성은 35가지 · 읽기 캐시로 JPEG 디코딩 15,600번 → 100번 · 2022년 첫 번째 대상 추정: 665–685 mm(fixed), 660 mm(nonuniform) |
+| **기술** | MATLAB, GNU Octave(테스트·CI) |
+| **실행·테스트** | [Run](#run) · 합성 장면 테스트를 GNU Octave로 로컬과 GitHub Actions에서 실행 |
+| **상세** | [zoocasso.github.io/work](https://zoocasso.github.io/work/)의 기타 작업 목록 |
 
 2022년 수업 프로젝트(MATLAB)입니다. 집적 영상 카메라 배열로 찍은 영상만으로 물체까지의 거리를 구합니다. 체적 컴퓨터 재생(VCR)으로 여러 깊이에서 장면을 재구성하면 물체는 자기 깊이에서만 선명해지므로, 물체의 기준 영상과 상관이 가장 높은 깊이를 추정 깊이로 정합니다. 지금 석사 연구([원점 최적화](https://github.com/zoocasso/origin-point-optimization-vcr))의 출발점입니다.
 
