@@ -6,9 +6,9 @@ A 2022 course project, where my master's research started: an object's depth is 
 
 **Write-up:** listed under other work on the site ([English](https://zoocasso.github.io/en/work/) · [한국어](https://zoocasso.github.io/work/)) · the research it led to: [origin point optimization](https://github.com/zoocasso/origin-point-optimization-vcr)
 
-<img src="docs/depth-sweep.jpg" alt="Three reconstructions of the Three Characters scene: all blurred near the camera, the front figure sharp, the back figure sharp" width="820">
+<img src="docs/depth-sweep.gif" alt="Animated depth sweep of a synthetic scene: the front square is sharp at 250 mm and the back disk near 500 mm, and the correlation with the front square peaks at 245–255 mm" width="760">
 
-<sub>Frames of the 2022 nonuniform VCR sweep of the Three Characters scene, 400–1000 mm ([`results/nonuniform/`](results/nonuniform/)). An object is sharp only at its own depth. The 2022 estimates in the slides: front figure 660 mm (nonuniform) and 665–685 mm (fixed); back figure 845 mm and 820–845 mm.</sub>
+<sub>A synthetic scene (7 × 7 views: a square at 250 mm, a disk at 500 mm, a far background) reconstructed at 48 depths with this repository's `vcr_shifts` and `vcr_reconstruct` (nonuniform VCR). An object is sharp only at its own depth; `estimate_depth` with the square as the reference returns 245–255 mm, a range because neighbouring depths round to the same offsets.</sub>
 
 ```mermaid
 flowchart LR
@@ -39,7 +39,7 @@ flowchart LR
 | **What** | 2022 course project (3D Image Processing, spring 2022): object depth from integral images, where my master's research on VCR started |
 | **My part** | 2022: ran the course scripts on the Three Characters set with small changes, and the depth experiments in the slides. Later: rewrote the scripts as functions and added the parts below |
 | **Others** | The reconstruction scripts (fixed and nonuniform VCR) and the correlation-filter script came from the course's lecture materials |
-| **Numbers** | 121 candidate depths give 35 different fixed-VCR reconstructions · read cache: 100 JPEG decodes instead of 15,600 · 2022 estimate for the front figure: 665–685 mm (fixed), 660 mm (nonuniform) |
+| **Numbers** | 121 candidate depths give 35 different fixed-VCR reconstructions · read cache: 100 JPEG decodes instead of 15,600 · 2022 estimate for the first target: 665–685 mm (fixed), 660 mm (nonuniform) |
 | **Stack** | MATLAB, GNU Octave (tests and CI) |
 | **Run · tests** | [Run](#run) · tests on synthetic scenes in GNU Octave, locally and on GitHub Actions |
 
@@ -70,7 +70,15 @@ octave --eval "addpath(pwd); addpath(fullfile(pwd, 'tests')); run_tests"
 
 ## Results
 
-[`results/fixed/`](results/fixed/) and [`results/nonuniform/`](results/nonuniform/) hold the 2022 reconstruction sweeps as videos: the Three Characters scene (3008 × 2000 px per image, 400–1000 mm) and a car scene at two resolutions (3072 × 2048 and 1536 × 1024 px, 200–500 mm). The slides are in [`docs/slides.pdf`](docs/slides.pdf); they give the fixed-VCR estimates as ranges (for example 665–685 mm for the first target) and the nonuniform ones as single depths (660 mm).
+In 2022 the course's Three Characters set (10 × 10 images of 3008 × 2000 px, 400–1000 mm) and a car scene at two resolutions (3072 × 2048 and 1536 × 1024 px, 200–500 mm) were reconstructed and the depths of three targets estimated. Fixed VCR gave ranges, nonuniform VCR single depths:
+
+| Target | Fixed VCR | Nonuniform VCR |
+|---|---:|---:|
+| first | 665–685 mm | 660 mm |
+| second | 750–775 mm | 765 mm |
+| third | 820–845 mm | 845 mm |
+
+The data set, the 2022 videos and slides are not in this repository.
 
 <details>
 <summary><b>How it works, file by file</b></summary>
