@@ -10,31 +10,11 @@ A 2022 course project, where my master's research started: an object's depth is 
 
 <sub>A synthetic scene (7 × 7 views: a square at 250 mm, a disk at 500 mm, a far background) reconstructed at 48 depths with this repository's `vcr_shifts` and `vcr_reconstruct` (nonuniform VCR). An object is sharp only at its own depth; `estimate_depth` with the square as the reference returns 245–255 mm, a range because neighbouring depths round to the same offsets.</sub>
 
-```mermaid
-flowchart LR
-    ei["Elemental images<br/>Three Characters: 10 × 10"]:::ext
-    ref["Reference image<br/>of the target"]:::ext
-    lec["Course lecture scripts<br/>2022: VCR and<br/>correlation filters"]:::other
-    vcr["VCR per candidate depth<br/>vcr_reconstruct"]:::rsbase
-    corr["FFT correlation peak<br/>4 filters and PCE"]:::rsbase
-    est["Best depth and tied range<br/>estimate_depth"]:::rs
-    ei --> vcr
-    vcr --> corr
-    ref --> corr
-    corr --> est
-    lec -.->|"base scripts"| vcr
-    lec -.->|"base scripts"| corr
-    classDef rs fill:#F3EEFE,stroke:#6338D6,stroke-width:2px,color:#0B0D12
-    classDef rsbase fill:#F3EEFE,stroke:#6338D6,stroke-width:2px,stroke-dasharray:4 3,color:#0B0D12
-    classDef other fill:#F1F2F5,stroke:#7A8394,stroke-width:1.5px,stroke-dasharray:5 4,color:#3F4654
-    classDef ext fill:#FFFFFF,stroke:#CBD1DA,stroke-width:1px,color:#3F4654
-```
+<img src="docs/diagram.png" alt="Elemental images are reconstructed at each candidate depth, correlated with the reference image, and the best depth and tied range are returned" width="860">
 
 <sub>Solid violet: added by me later · dashed violet: based on the course scripts, rewritten by me · grey dashed: the course's lecture materials · white: inputs.</sub>
 
-## At a glance
-
-| | |
+| At&nbsp;a&nbsp;glance | |
 | :--- | :--- |
 | **What** | 2022 course project (3D Image Processing, spring 2022): object depth from integral images, where my master's research on VCR started |
 | **My part** | 2022: ran the course scripts on the Three Characters set with small changes, and the depth experiments in the slides. Later: rewrote the scripts as functions and added the parts below |

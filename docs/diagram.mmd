@@ -1,0 +1,17 @@
+flowchart LR
+    ei["Elemental images<br/>Three Characters: 10 × 10"]:::ext
+    ref["Reference image<br/>of the target"]:::ext
+    lec["Course lecture scripts<br/>2022: VCR and<br/>correlation filters"]:::other
+    vcr["VCR per candidate depth<br/>vcr_reconstruct"]:::rsbase
+    corr["FFT correlation peak<br/>4 filters and PCE"]:::rsbase
+    est["Best depth and tied range<br/>estimate_depth"]:::rs
+    ei --> vcr
+    vcr --> corr
+    ref --> corr
+    corr --> est
+    lec -.->|"base scripts"| vcr
+    lec -.->|"base scripts"| corr
+    classDef rs fill:#F3EEFE,stroke:#6338D6,stroke-width:2px,color:#0B0D12
+    classDef rsbase fill:#F3EEFE,stroke:#6338D6,stroke-width:2px,stroke-dasharray:4 3,color:#0B0D12
+    classDef other fill:#F1F2F5,stroke:#7A8394,stroke-width:1.5px,stroke-dasharray:5 4,color:#3F4654
+    classDef ext fill:#FFFFFF,stroke:#CBD1DA,stroke-width:1px,color:#3F4654
